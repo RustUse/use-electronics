@@ -1,0 +1,99 @@
+[workspace]
+release = false
+release_always = false
+changelog_update = false
+pr_labels = ["release"]
+max_analyze_commits = 2000
+
+[[package]]
+name = "use-component"
+release = true
+version_group = "rustuse-electronics"
+
+[[package]]
+name = "use-pin"
+release = true
+version_group = "rustuse-electronics"
+
+[[package]]
+name = "use-package"
+release = true
+version_group = "rustuse-electronics"
+
+[[package]]
+name = "use-net-label"
+release = true
+version_group = "rustuse-electronics"
+
+[[package]]
+name = "use-rating"
+release = true
+version_group = "rustuse-electronics"
+
+[[package]]
+name = "use-resistor"
+release = true
+version_group = "rustuse-electronics"
+
+[[package]]
+name = "use-capacitor"
+release = true
+version_group = "rustuse-electronics"
+
+[[package]]
+name = "use-diode"
+release = true
+version_group = "rustuse-electronics"
+
+[[package]]
+name = "use-transistor"
+release = true
+version_group = "rustuse-electronics"
+
+[[package]]
+name = "use-circuit"
+release = true
+version_group = "rustuse-electronics"
+
+[[package]]
+name = "use-board"
+release = true
+version_group = "rustuse-electronics"
+
+[[package]]
+name = "use-electronics"
+release = true
+version_group = "rustuse-electronics"
+changelog_update = true
+changelog_path = "./CHANGELOG.md"
+changelog_include = [
+  "use-component",
+  "use-pin",
+  "use-package",
+  "use-net-label",
+  "use-rating",
+  "use-resistor",
+  "use-capacitor",
+  "use-diode",
+  "use-transistor",
+  "use-circuit",
+  "use-board",
+]
+
+[changelog]
+header = """# Changelog
+
+## Unreleased
+"""
+protect_breaking_commits = true
+sort_commits = "oldest"
+commit_parsers = [
+  { message = "^feat(?:\\([^)]+\\))?!?: .+", group = "Added" },
+  { message = "^fix(?:\\([^)]+\\))?!?: .+", group = "Fixed" },
+  { message = "^security(?:\\([^)]+\\))?!?: .+", group = "Security" },
+  { message = "^(?:refactor|perf|change)(?:\\([^)]+\\))?!?: .+", group = "Changed" },
+  { message = "^docs(?:\\([^)]+\\))?!?: .+", group = "Documentation" },
+  { message = "^(?:build|ci|chore|deps|test)(?:\\([^)]+\\))?!?: .+", group = "Tooling" },
+  { footer = "^changelog: ?ignore$", skip = true },
+  { message = "^.*", group = "Changed" },
+]

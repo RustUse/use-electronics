@@ -239,7 +239,7 @@ impl fmt::Display for BoardLayerParseError {
             Self::Empty => formatter.write_str("board layer cannot be empty"),
             Self::InvalidInnerCopperIndex => {
                 formatter.write_str("inner copper layer index must be non-zero")
-            }
+            },
         }
     }
 }
