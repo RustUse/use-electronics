@@ -1,0 +1,24 @@
+[package]
+name = "use-resistor"
+description = "Primitive resistor vocabulary for RustUse electronics crates"
+publish = true
+authors.workspace = true
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+repository.workspace = true
+homepage.workspace = true
+readme = "README.md"
+documentation = "https://docs.rs/use-resistor"
+keywords = ["electronics", "resistor", "rating", "rustuse"]
+categories = ["data-structures"]
+
+[package.metadata.docs.rs]
+all-features = true
+
+[dependencies]
+use-rating.workspace = true
+
+[lints]
+workspace = true

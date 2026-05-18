@@ -1,0 +1,34 @@
+[package]
+name = "use-electronics"
+description = "Facade crate for RustUse practical electronics primitives"
+publish = true
+authors.workspace = true
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+repository.workspace = true
+homepage.workspace = true
+readme = "README.md"
+documentation = "https://docs.rs/use-electronics"
+keywords = ["electronics", "facade", "parts", "rustuse"]
+categories = ["data-structures"]
+
+[package.metadata.docs.rs]
+all-features = true
+
+[dependencies]
+use-board.workspace = true
+use-capacitor.workspace = true
+use-circuit.workspace = true
+use-component.workspace = true
+use-diode.workspace = true
+use-net-label.workspace = true
+use-package.workspace = true
+use-pin.workspace = true
+use-rating.workspace = true
+use-resistor.workspace = true
+use-transistor.workspace = true
+
+[lints]
+workspace = true

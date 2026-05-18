@@ -1,0 +1,24 @@
+[package]
+name = "use-pin"
+description = "Primitive electronic pin vocabulary for RustUse"
+publish = true
+authors.workspace = true
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+repository.workspace = true
+homepage.workspace = true
+readme = "README.md"
+documentation = "https://docs.rs/use-pin"
+keywords = ["electronics", "pin", "package", "rustuse"]
+categories = ["data-structures"]
+
+[package.metadata.docs.rs]
+all-features = true
+
+[dependencies]
+use-component.workspace = true
+
+[lints]
+workspace = true
