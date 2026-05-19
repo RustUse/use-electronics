@@ -206,7 +206,7 @@ impl fmt::Display for FrequencyRating {
     }
 }
 
-fn finite(value: f64) -> Result<f64, RatingError> {
+const fn finite(value: f64) -> Result<f64, RatingError> {
     if value.is_finite() {
         Ok(value)
     } else {

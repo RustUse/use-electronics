@@ -1,6 +1,6 @@
 # use-electronics
 
-Facade crate for RustUse practical electronics primitives.
+Facade crate for `RustUse` practical electronics primitives.
 
 `use-electronics` is a thin re-export layer over focused child crates for components, pins, packages, circuits, net labels, ratings, common parts, and board-level relationships. Most implementation lives in the focused crates.
 

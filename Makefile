@@ -1,6 +1,8 @@
-.PHONY: help fmt check lint test test-minimal build doc examples audit deny sbom publish-dry-run-focused publish-dry-run-facade release-readiness facade-post-publish-validation verify
+.PHONY: help fmt check lint test test-minimal build doc examples audit deny sbom publish-dry-run-first-wave publish-dry-run-second-wave publish-dry-run-third-wave publish-dry-run-facade release-readiness second-wave-readiness third-wave-readiness facade-post-publish-validation verify
 
-FOCUSED_CRATES := use-component use-pin use-package use-net-label use-rating use-resistor use-capacitor use-diode use-transistor use-circuit use-board
+FIRST_WAVE_CRATES := use-component use-package use-net-label use-rating use-transistor use-board
+SECOND_WAVE_CRATES := use-pin use-resistor use-capacitor use-diode
+THIRD_WAVE_CRATE := use-circuit
 FACADE_CRATE := use-electronics
 
 help:
@@ -17,9 +19,13 @@ help:
 		"audit                          Run cargo-audit" \
 		"deny                           Run cargo-deny" \
 		"sbom                           Generate a CycloneDX SBOM for $(FACADE_CRATE)" \
-		"publish-dry-run-focused        List package contents and dry-run publish focused crates" \
+		"publish-dry-run-first-wave     List package contents and dry-run the independent first-wave crates" \
+		"publish-dry-run-second-wave    Dry-run the second-wave crates after first-wave propagation" \
+		"publish-dry-run-third-wave     Dry-run $(THIRD_WAVE_CRATE) after second-wave propagation" \
 		"publish-dry-run-facade         Dry-run publish $(FACADE_CRATE) after crates.io propagation" \
-		"release-readiness              Run the pre-release focused-crate validation path" \
+		"release-readiness              Run the pre-release first-wave validation path" \
+		"second-wave-readiness          Dry-run the second-wave crates after the first wave is live" \
+		"third-wave-readiness           Dry-run $(THIRD_WAVE_CRATE) after the second wave is live" \
 		"facade-post-publish-validation Dry-run the facade crate after focused crates are live" \
 		"verify                         Run the main workspace validation path"
 
@@ -56,20 +62,42 @@ deny:
 sbom:
 	cargo cyclonedx --manifest-path crates/$(FACADE_CRATE)/Cargo.toml --all-features --format json --spec-version 1.5 --override-filename sbom.cyclonedx
 
-publish-dry-run-focused:
-	@if [ -z "$(strip $(FOCUSED_CRATES))" ]; then \
-		printf "%s\n" "No focused crates configured"; \
+publish-dry-run-first-wave:
+	@if [ -z "$(strip $(FIRST_WAVE_CRATES))" ]; then \
+		printf "%s\n" "No first-wave crates configured"; \
 	else \
-		for crate in $(FOCUSED_CRATES); do \
+		for crate in $(FIRST_WAVE_CRATES); do \
 			cargo package --list -p $$crate; \
 			cargo publish --dry-run --allow-dirty -p $$crate; \
 		done; \
 	fi
 
+publish-dry-run-second-wave:
+	@if [ -z "$(strip $(SECOND_WAVE_CRATES))" ]; then \
+		printf "%s\n" "No second-wave crates configured"; \
+	else \
+		for crate in $(SECOND_WAVE_CRATES); do \
+			cargo package --list -p $$crate; \
+			cargo publish --dry-run --allow-dirty -p $$crate; \
+		done; \
+	fi
+
+publish-dry-run-third-wave:
+	@if [ -z "$(strip $(THIRD_WAVE_CRATE))" ]; then \
+		printf "%s\n" "No focused crates configured"; \
+	else \
+		cargo package --list -p $(THIRD_WAVE_CRATE); \
+		cargo publish --dry-run --allow-dirty -p $(THIRD_WAVE_CRATE); \
+	fi
+
 publish-dry-run-facade:
 	cargo publish --dry-run --allow-dirty -p $(FACADE_CRATE)
 
-release-readiness: verify examples test-minimal publish-dry-run-focused
+release-readiness: verify examples test-minimal publish-dry-run-first-wave
+
+second-wave-readiness: publish-dry-run-second-wave
+
+third-wave-readiness: publish-dry-run-third-wave
 
 facade-post-publish-validation: publish-dry-run-facade
 

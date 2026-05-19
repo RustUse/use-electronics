@@ -48,16 +48,16 @@ publish = false
 versioning = "lockstep-0.x"
 first-publish-candidates = [
     "use-component",
-    "use-pin",
     "use-package",
     "use-net-label",
     "use-rating",
+    "use-transistor",
+    "use-board",
+    "use-pin",
     "use-resistor",
     "use-capacitor",
     "use-diode",
-    "use-transistor",
     "use-circuit",
-    "use-board",
     "use-electronics",
 ]
 [workspace.lints.clippy]
